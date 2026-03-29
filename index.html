@@ -20,9 +20,9 @@
   --fx:#0f0f0f;--fs:#181818;--fs2:#282828;--fa:#1DB954;--ft:#e8e8e8;--fst:#a0a0a0;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;background:#05111f;font-family:var(--fb)}
+html,body{width:100%;height:100%;min-height:100%;overflow:hidden;background:#05111f;font-family:var(--fb)}
 #app{display:flex;flex-direction:column;width:100%;max-width:430px;
-  height:100vh;height:100dvh;margin:0 auto;position:relative;overflow:hidden;background:var(--fx)}
+  height:100vh;height:100dvh;min-height:100%;margin:0 auto;position:relative;overflow:hidden;background:var(--fx)}
 @media(min-width:431px){
   #app{box-shadow:0 0 80px rgba(0,0,0,.85);border-radius:36px;overflow:hidden}
   body{display:flex;align-items:center;justify-content:center;background:#03080e}
@@ -768,7 +768,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#05111f;font-family:
         Continue with Google (MUST)
       </button>
       <div class="auth-switch">No account yet? <a onclick="showScreen('sc-signup')">Create one</a></div>
-      <div class="auth-foot">By signing in you agree to MUST Connect's Terms of Service</div>
+      <div class="auth-foot">By signing in you agree to MUST Campus's Terms of Service</div>
     </div>
   </div>
 
@@ -1356,7 +1356,7 @@ const DB = {
 
 /* SEED DATA: sample posts visible to everyone */
 const SEED_POSTS = [
-  {id:'s1',authorId:'system',authorName:'MUST Admin',authorIni:'MA',authorGrad:'linear-gradient(135deg,#0D2B6B,#1B4F8A)',authorPhoto:null,time:'2h ago',course:'Administration',text:'🎉 Welcome to MUST Connect — your official campus social app! Share posts, join clubs, find study groups, and stay updated on campus life. Foundation of Innovations! 🔵🟡',emoji:'🎓',photo:null,likes:['_system'],comments:[{authorId:'s',authorName:'Brian M.',authorIni:'BM',text:'Finally!! This is exactly what MUST needed 🙌',time:'1h ago'},{authorId:'s',authorName:'Amina K.',authorIni:'AK',text:'Love it! Already joined the Tech Club 💻',time:'45m ago'}],showCmt:false,type:'post',ts:Date.now()-7200000},
+  {id:'s1',authorId:'system',authorName:'MUST Admin',authorIni:'MA',authorGrad:'linear-gradient(135deg,#0D2B6B,#1B4F8A)',authorPhoto:null,time:'2h ago',course:'Administration',text:'🎉 Welcome to MUST Campus — your official campus social app! Share posts, join clubs, find study groups, and stay updated on campus life. Foundation of Innovations! 🔵🟡',emoji:'🎓',photo:null,likes:['_system'],comments:[{authorId:'s',authorName:'Brian M.',authorIni:'BM',text:'Finally!! This is exactly what MUST needed 🙌',time:'1h ago'},{authorId:'s',authorName:'Amina K.',authorIni:'AK',text:'Love it! Already joined the Tech Club 💻',time:'45m ago'}],showCmt:false,type:'post',ts:Date.now()-7200000},
   {id:'s2',authorId:'u_amina',authorName:'Amina Kariuki',authorIni:'AK',authorGrad:'linear-gradient(135deg,#1a5c3a,#1DB954)',authorPhoto:null,time:'3h ago',course:'Computer Science · Year 3',text:'Just submitted our final year project on ML-based crop disease detection 🌱 Four years of hard work paying off. Shoutout to the whole team — we did it! Results in two weeks 🤞',emoji:'🌱',photo:null,likes:['_system','u_brian'],comments:[{authorId:'s',authorName:'Samuel M.',authorIni:'SM',text:'This is HUGE! What accuracy did you get on the model?',time:'2h ago'},{authorId:'s',authorName:'Lucy O.',authorIni:'LO',text:'Congratulations Amina! You deserve it 🎊',time:'1h ago'}],showCmt:false,type:'post',ts:Date.now()-10800000},
   {id:'s3',authorId:'u_samuel',authorName:'Samuel Mwangi',authorIni:'SM',authorGrad:'linear-gradient(135deg,#300,#600)',authorPhoto:null,time:'5h ago',course:'Mechanical Engineering · Year 4',text:'The new engineering lab equipment just arrived! 🔧 Robotics arm, 3D printers, and CNC machines ready for student projects. Walk-ins welcome — Block E, Room 102. Open 8AM–8PM.',emoji:'🔧',photo:null,likes:['_system'],comments:[{authorId:'s',authorName:'Kevin O.',authorIni:'KO',text:'Been waiting for this! The old printer was such a pain 😭',time:'4h ago'}],showCmt:false,type:'post',ts:Date.now()-18000000},
   {id:'s4',authorId:'u_lucy',authorName:'Lucy Otieno',authorIni:'LO',authorGrad:'linear-gradient(135deg,#3a1a00,#6a3a00)',authorPhoto:null,time:'Yesterday',course:'Business & Economics · Year 2',text:'Looking for a study group for BCOM401 (Cost Accounting) — the CAT is in two weeks 😅📚 Anyone interested? Tuesdays after 4PM at the library.',emoji:null,photo:null,likes:['_system'],comments:[{authorId:'s',authorName:'Grace K.',authorIni:'GK',text:'Count me in!! Library Tuesday 4PM 🙋‍♀️',time:'Yesterday'},{authorId:'s',authorName:'Brian M.',authorIni:'BM',text:'Same here, BCOM401 is no joke. I will join!',time:'Yesterday'}],showCmt:false,type:'post',ts:Date.now()-86400000},
@@ -1606,7 +1606,7 @@ function completeLogin(){
   o.style.pointerEvents='none';
   o.style.display='none';
   bootApp();
-  const name=(currentUser.firstName||currentUser.name||'Student').split(' ')[0];
+  const name=(currentUser.firstName||currentUser.name||'Student').split(' ')[0]||'Student';
   showToast('Welcome, '+name+'! 🎓');
 }
 
@@ -1892,7 +1892,7 @@ function applyProfile(){
 function updateProfilePhoto(input){
   const f=input.files[0]; if(!f) return;
   compressImg(f,400,0.8,b64=>{
-    user.photo=b64;
+    currentUser.photo=b64;
     document.getElementById('ep-photo-preview').src=b64;
     document.getElementById('ep-photo-preview').style.display='block';
     const icon=document.getElementById('ep-cam-icon');
@@ -2177,7 +2177,7 @@ function renderClubs(clubs) {
       </div>
       <div class="club-body">
         <div class="club-name">${c.name}</div>
-        <div class="club-desc">${c.desc}</div>
+        <div class="club-desc">${c.description||c.desc||""}</div>
         <div class="club-meta">
           <div class="club-meta-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>${c.members+(isJoined?1:0)} members</div>
           <div class="club-meta-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${c.schedule}</div>
@@ -2237,7 +2237,7 @@ function openClubDetail(clubId) {
   document.getElementById('cd-banner').textContent = club.emoji;
   document.getElementById('cd-desc').textContent = club.desc;
   document.getElementById('cd-meta').innerHTML = `
-    <div style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--fst)"><svg fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${club.members} members</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--fst)"><svg fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${club.member_count||club.members||0} members</div>
     <div style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--fst)"><svg fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${club.schedule}</div>`;
   // Posts
   const postsEl = document.getElementById('cd-posts');
