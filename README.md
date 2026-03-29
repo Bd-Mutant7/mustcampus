@@ -6,42 +6,8 @@ A mobile-first Progressive Web App (PWA) for MUST students. Works offline, insta
 
 ---
 
-## 🚀 Deploy to Vercel (websites only — no terminal)
 
-### Step 1 — Create GitHub Repo
-1. Go to **https://github.com** → **New repository**
-2. Name it `mustcampus` (or any name you prefer)
-3. Set to **Public** or **Private**
-4. ✅ Add a README file
-5. Click **Create repository**
 
-### Step 2 — Upload all files
-In your new repo, click **Add file → Upload files** and upload everything from this ZIP:
-```
-index.html
-manifest.json
-sw.js
-vercel.json
-.gitignore
-README.md
-icons/
-  icon-192.png
-  icon-512.png
-```
-Click **Commit changes**.
-
-### Step 3 — Deploy on Vercel
-1. Go to **https://vercel.com** → Sign in with GitHub
-2. Click **Add New Project**
-3. Select your `mustcampus` repo → click **Import**
-4. Framework Preset: **Other** (leave as is)
-5. Click **Deploy** → wait ~30 seconds
-6. Your app is live at `https://mustcampus-xxx.vercel.app` 🎉
-
-### Step 4 — Custom domain (optional)
-In Vercel dashboard → your project → **Settings → Domains** → add your domain.
-
----
 
 ## 📱 Install as App (PWA)
 
@@ -125,7 +91,7 @@ mustcampus/
 
 ## 📝 Updating the App
 
-1. Make changes to `index.html` on GitHub (click ✏️ pencil icon)
+1. Make changes to `index.html` on GitHub
 2. Commit changes
 3. Vercel auto-deploys in ~30 seconds — no manual action needed
 
